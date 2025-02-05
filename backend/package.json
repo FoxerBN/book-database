@@ -7,6 +7,9 @@
     "test": "node --no-warnings --experimental-vm-modules node_modules/jest/bin/jest.js",
     "start": "nodemon server.js"
   },
+  "jest": {
+    "watch": false
+  },
   "author": "",
   "license": "ISC",
   "description": "",
