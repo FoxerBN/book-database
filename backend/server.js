@@ -14,6 +14,8 @@ import allBook from './routes/books/allBook.js'
 import paginateBooks from './routes/books/paginateBooks.js'
 import oneBook from './routes/books/oneBook.js';
 import searchBook from './routes/books/searchBook.js';
+import addOneBook from './routes/books/addBook.js';
+import deleteOneBook from './routes/books/deleteOneBook.js';
 //* GLOBAL MIDDLEWARES
 app.use(requestLogger);
 
@@ -25,7 +27,8 @@ app.use('/api/books', allBook)
 app.use('/api/books',paginateBooks)
 app.use('/api/books',oneBook)
 app.use('/api/books/search',searchBook)
-
+app.use('/api/books',addOneBook)
+app.use('/api/books',deleteOneBook)
 
 app.use(errorHandler)
 app.listen(PORT, () => {
