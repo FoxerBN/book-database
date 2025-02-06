@@ -1,5 +1,5 @@
-import Review from '../../../models/Review.js';
-import Book from '../../../models/Book.js';
+import Review from "../../../models/Review.js";
+import Book from "../../../models/Book.js";
 
 export const addComment = async (req, res, next) => {
   try {
@@ -8,20 +8,19 @@ export const addComment = async (req, res, next) => {
 
     const book = await Book.findById(bookId);
     if (!book) {
-      return res.status(404).json({ message: 'Book not found' });
+      return res.status(404).json({ message: "Book not found" });
     }
 
-    // Check if a review already exists
     let review = await Review.findOne({ book: bookId });
 
     if (review) {
-      review.comment = comment; // Update the existing comment
+      review.comment = comment;
     } else {
-      review = new Review({ book: bookId, comment }); // Create a new review
+      review = new Review({ book: bookId, comment });
     }
 
     await review.save();
-    res.status(201).json({ message: 'Comment saved', review });
+    res.status(201).json({ message: "Comment saved", review });
   } catch (error) {
     next(error);
   }

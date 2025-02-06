@@ -14,7 +14,7 @@ export const addLike = async (req, res, next) => {
       return res.status(404).json({ message: 'Review not found for this book' });
     }
 
-    res.status(200).json({ message: 'Like added', likes: review.likes });
+    res.status(201).json({ message: 'Like added', likes: review.likes });
   } catch (error) {
     next(error);
   }
