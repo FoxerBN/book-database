@@ -1,9 +1,15 @@
 //* SERVER SETTINGS
 import express from 'express';
 import {connectToMongoDB} from './config/db.js'
+import helmet from 'helmet';
+import mongoSanitize from 'express-mongo-sanitize';
+import xssClean from 'xss-clean';
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(express.json());
+app.use(helmet());
+app.use(mongoSanitize());
+app.use(xssClean());
 connectToMongoDB()
 
 //*MIDDLEWARES IMPORT
