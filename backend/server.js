@@ -5,7 +5,7 @@ import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
 import xssClean from 'xss-clean';
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.use(express.json());
 app.use(helmet());
 app.use(mongoSanitize());
@@ -27,9 +27,10 @@ import reviewsRouter from './routes/books/reviewsRouter.js'
 app.use(requestLogger);
 
 //* ROUTES
-app.get('/', (req,res)=>{
-    res.send('Hello from Next.js API!')
-})
+app.post("/test", (req, res) => {
+    res.json({ sanitizedData: req.body });
+});
+
 app.use('/api/books', allBook)
 app.use('/api/books',paginateBooks)
 app.use('/api/books',oneBook)

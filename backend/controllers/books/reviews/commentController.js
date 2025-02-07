@@ -6,6 +6,9 @@ export const addComment = async (req, res, next) => {
     const { bookId } = req.params;
     const { comment } = req.body;
 
+    if (!comment || comment.trim() === "") {
+      return res.status(400).json({ message: "Comment cannot be empty" });
+    }
     const book = await Book.findById(bookId);
     if (!book) {
       return res.status(404).json({ message: "Book not found" });
@@ -13,14 +16,14 @@ export const addComment = async (req, res, next) => {
 
     let review = await Review.findOne({ book: bookId });
 
-    if (review) {
-      review.comment = comment;
-    } else {
-      review = new Review({ book: bookId, comment });
+    if (!review) {
+      review = new Review({ book: bookId, comments: [] });
     }
 
+    review.comment.push(comment);
+
     await review.save();
-    res.status(201).json({ message: "Comment saved", review });
+    res.status(201).json({ message: "Comment added successfully", review });
   } catch (error) {
     next(error);
   }
