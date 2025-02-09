@@ -4,12 +4,15 @@ import {connectToMongoDB} from './config/db.js'
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
 import xssClean from 'xss-clean';
+import {detectMaliciousContent} from './middlewares/bodySecureCheck.js'
 const app = express();
 const PORT = process.env.PORT || 3001;
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(mongoSanitize());
 app.use(xssClean());
+app.use(detectMaliciousContent);
 connectToMongoDB()
 
 //*MIDDLEWARES IMPORT
@@ -43,6 +46,5 @@ app.use(errorHandler)
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
-
 // //* EXPORTING APP FOR TESTING
 // export default app;
