@@ -1,54 +1,88 @@
-// src/components/auth/RegisterForm.tsx
 import { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+
 const RegisterForm: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
+  const [passwordValidations, setPasswordValidations] = useState({
+    length: false,
+    uppercase: false,
+    lowercase: false,
+    number: false,
+  });
 
-  const validatePassword = (pwd: string): boolean => {
-    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/.test(pwd);
+  const validatePassword = (pwd: string) => {
+    const validations = {
+      length: pwd.length >= 6,
+      uppercase: /[A-Z]/.test(pwd),
+      lowercase: /[a-z]/.test(pwd),
+      number: /\d/.test(pwd),
+    };
+    setPasswordValidations(validations);
+    return Object.values(validations).every(Boolean);
   };
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validatePassword(password)) {
       setError('Password must be at least 6 characters long, with uppercase, lowercase, and a number.');
+      setTimeout(() => setError(null), 3000);
       return;
     }
     try {
-      await axios.post('http://localhost:5000/register', { name, email, password }, { withCredentials: true });
+      await axios.post('http://localhost:3000/register', { name, email, password }, { withCredentials: true });
     } catch (err: any) {
       setError(err.response?.data?.error || 'Registration failed');
+      setTimeout(() => setError(null), 3000);
     }
   };
-
+  
   return (
-    <form onSubmit={handleRegister}>
-      {error && <p className="text-red-500 mb-3">{error}</p>}
-      <div className="mb-4">
-        <label className="block text-gray-700">Name</label>
-        <input type="text" className="w-full p-2 border border-gray-300 rounded mt-1" value={name} onChange={(e) => setName(e.target.value)} required />
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Email</label>
-        <input type="email" className="w-full p-2 border border-gray-300 rounded mt-1" value={email} onChange={(e) => setEmail(e.target.value)} required />
-      </div>
-      <div className="mb-6">
-        <label className="block text-gray-700">Password</label>
-        <input type="password" className="w-full p-2 border border-gray-300 rounded mt-1" value={password} onChange={(e) => setPassword(e.target.value)} required />
-      </div>
-      <button type="submit" className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">Register</button>
-
-      <p className="mt-4 text-center">
-        Already have an account?{' '}
-        <Link to="/login" className="text-blue-600 hover:underline">
-          Login here
-        </Link>
-      </p>
-    </form>
+    <div className="">
+      <h2 className="text-2xl font-bold text-white mb-6 text-center">Register</h2>
+      {error && <p className="text-red-500 mb-3 text-center">{error}</p>}
+      <form onSubmit={handleRegister}>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-300">Name</label>
+          <input type="text" className="mt-1 p-2 w-full bg-gray-700 border border-gray-600 rounded-md text-white" value={name} onChange={(e) => setName(e.target.value)} required />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-300">Email</label>
+          <input type="email" className="mt-1 p-2 w-full bg-gray-700 border border-gray-600 rounded-md text-white" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-300">Password</label>
+          <input
+            type="password"
+            className="mt-1 p-2 w-full bg-gray-700 border border-gray-600 rounded-md text-white"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              validatePassword(e.target.value);
+            }}
+            required
+          />
+          <div className="mt-2 text-sm text-gray-400">
+            <p className={passwordValidations.length ? 'text-blue-300' : 'text-red-600 opacity-85'}>{passwordValidations.length ? '✓':'✕'} At least 6 characters</p>
+            <p className={passwordValidations.uppercase ? 'text-blue-300' : 'text-red-600 opacity-85'}>{passwordValidations.uppercase ? '✓':'✕'} One uppercase letter</p>
+            <p className={passwordValidations.lowercase ? 'text-blue-300' : 'text-red-600 opacity-85'}>{passwordValidations.lowercase ? '✓':'✕'} One lowercase letter</p>
+            <p className={passwordValidations.number ? 'text-blue-300' : 'text-red-600 opacity-85'}>{passwordValidations.number ? '✓':'✕'} One number</p>
+          </div>
+        </div>
+        <button type="submit" className="w-full bg-gradient-to-r from-purple-600 via-purple-400 to-blue-500 text-white px-4 py-2 font-bold rounded-md hover:opacity-80">
+          Register
+        </button>
+        <p className="mt-4 text-center text-gray-300">
+          Already have an account?{' '}
+          <Link to="/login" className="text-blue-400 hover:underline">
+            Login here
+          </Link>
+        </p>
+      </form>
+    </div>
   );
 };
 
