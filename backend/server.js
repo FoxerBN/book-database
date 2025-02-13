@@ -5,8 +5,15 @@ import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
 import xssClean from 'xss-clean';
 import {detectMaliciousContent} from './middlewares/bodySecureCheck.js'
+import cors from 'cors';
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+app.use(cors({
+    origin: "http://localhost:5174",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true 
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
@@ -18,7 +25,7 @@ connectToMongoDB()
 //*MIDDLEWARES IMPORT
 import requestLogger from './middlewares/logger.js'
 import errorHandler from './middlewares/errorHandler.js'
-//* ROUTES IMPORT
+//*BOOK ROUTES IMPORT
 import allBook from './routes/books/allBook.js'
 import paginateBooks from './routes/books/paginateBooks.js'
 import oneBook from './routes/books/oneBook.js';
@@ -26,6 +33,8 @@ import searchBook from './routes/books/searchBook.js';
 import addOneBook from './routes/books/addBook.js';
 import deleteOneBook from './routes/books/deleteOneBook.js';
 import reviewsRouter from './routes/books/reviewsRouter.js'
+//*USER ROUTES IMPORT
+import userRouter from './routes/user/userRouter.js';
 //* GLOBAL MIDDLEWARES
 app.use(requestLogger);
 
@@ -41,6 +50,8 @@ app.use('/api/books/search',searchBook)
 app.use('/api/books',addOneBook)
 app.use('/api/books',deleteOneBook)
 app.use('/api/books',reviewsRouter)
+
+app.use('/user',userRouter)
 
 app.use(errorHandler)
 app.listen(PORT, () => {

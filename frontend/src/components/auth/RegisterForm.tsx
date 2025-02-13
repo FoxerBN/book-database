@@ -32,8 +32,10 @@ const RegisterForm: React.FC = () => {
       setTimeout(() => setError(null), 3000);
       return;
     }
+    const formData = { name, email, password };
+    console.log("Sending Data:", formData); // ✅ Debugging
     try {
-      await axios.post('http://localhost:3000/register', { name, email, password }, { withCredentials: true });
+      await axios.post('http://localhost:3001/user/register', { name, email, password }, { withCredentials: true });
     } catch (err: any) {
       setError(err.response?.data?.error || 'Registration failed');
       setTimeout(() => setError(null), 3000);
