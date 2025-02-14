@@ -20,11 +20,14 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await axios.get("http://localhost:5000/protected", {
+        const response = await axios.get("http://localhost:3001/user/protected", {
           withCredentials: true,
         });
-        setAuth({ loading: false, isAuthenticated: true });
-      } catch (error) {
+
+        if (response.status === 200) {
+          setAuth({ loading: false, isAuthenticated: true });
+        }
+      } catch (error: any) {
         setAuth({ loading: false, isAuthenticated: false });
       }
     };

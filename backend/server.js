@@ -6,14 +6,18 @@ import mongoSanitize from 'express-mongo-sanitize';
 import xssClean from 'xss-clean';
 import {detectMaliciousContent} from './middlewares/bodySecureCheck.js'
 import cors from 'cors';
+import dotenv from 'dotenv'
+import cookieParser from "cookie-parser";
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+dotenv.config()
 app.use(cors({
-    origin: "http://localhost:5174",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true 
 }));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
@@ -23,8 +27,8 @@ app.use(detectMaliciousContent);
 connectToMongoDB()
 
 //*MIDDLEWARES IMPORT
-import requestLogger from './middlewares/logger.js'
-import errorHandler from './middlewares/errorHandler.js'
+import requestLogger from './middlewares/global/logger.js'
+import errorHandler from './middlewares/global/errorHandler.js'
 //*BOOK ROUTES IMPORT
 import allBook from './routes/books/allBook.js'
 import paginateBooks from './routes/books/paginateBooks.js'
