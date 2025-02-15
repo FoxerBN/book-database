@@ -4,7 +4,7 @@ import {connectToMongoDB} from './config/db.js'
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
 import xssClean from 'xss-clean';
-import {detectMaliciousContent} from './middlewares/bodySecureCheck.js'
+import {detectMaliciousContent} from './middlewares//global/bodySecureCheck.js'
 import cors from 'cors';
 import dotenv from 'dotenv'
 import cookieParser from "cookie-parser";

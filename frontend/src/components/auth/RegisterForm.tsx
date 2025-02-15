@@ -2,12 +2,18 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+interface PasswordValidation  {
+  length: boolean;
+  uppercase: boolean;
+  lowercase: boolean;
+  number: boolean;
+}
 const RegisterForm: React.FC = () => {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
-  const [passwordValidations, setPasswordValidations] = useState({
+  const [passwordValidations, setPasswordValidations] = useState<PasswordValidation>({
     length: false,
     uppercase: false,
     lowercase: false,
@@ -32,12 +38,11 @@ const RegisterForm: React.FC = () => {
       setTimeout(() => setError(null), 3000);
       return;
     }
-    const formData = { name, email, password };
-    console.log("Sending Data:", formData); // ✅ Debugging
     try {
-      await axios.post('http://localhost:3001/user/register', { name, email, password }, { withCredentials: true });
+      const response = await axios.post('http://localhost:3001/user/register', { name, email, password }, { withCredentials: true });
+      console.log(response.data.message);
     } catch (err: any) {
-      setError(err.response?.data?.error || 'Registration failed');
+      setError(err.response?.data?.message || 'Registration failed');
       setTimeout(() => setError(null), 3000);
     }
   };
@@ -68,10 +73,10 @@ const RegisterForm: React.FC = () => {
             required
           />
           <div className="mt-2 text-sm text-gray-400">
-            <p className={passwordValidations.length ? 'text-blue-300' : 'text-red-600 opacity-85'}>{passwordValidations.length ? '✓':'✕'} At least 6 characters</p>
-            <p className={passwordValidations.uppercase ? 'text-blue-300' : 'text-red-600 opacity-85'}>{passwordValidations.uppercase ? '✓':'✕'} One uppercase letter</p>
-            <p className={passwordValidations.lowercase ? 'text-blue-300' : 'text-red-600 opacity-85'}>{passwordValidations.lowercase ? '✓':'✕'} One lowercase letter</p>
-            <p className={passwordValidations.number ? 'text-blue-300' : 'text-red-600 opacity-85'}>{passwordValidations.number ? '✓':'✕'} One number</p>
+            <p className={passwordValidations.length ? 'text-blue-300' : 'text-red-500 opacity-85'}>{passwordValidations.length ? '✓':'✕'} At least 6 characters</p>
+            <p className={passwordValidations.uppercase ? 'text-blue-300' : 'text-red-500 opacity-85'}>{passwordValidations.uppercase ? '✓':'✕'} One uppercase letter</p>
+            <p className={passwordValidations.lowercase ? 'text-blue-300' : 'text-red-500 opacity-85'}>{passwordValidations.lowercase ? '✓':'✕'} One lowercase letter</p>
+            <p className={passwordValidations.number ? 'text-blue-300' : 'text-red-500 opacity-85'}>{passwordValidations.number ? '✓':'✕'} One number</p>
           </div>
         </div>
         <button type="submit" className="w-full bg-gradient-to-r from-purple-600 via-purple-400 to-blue-500 text-white px-4 py-2 font-bold rounded-md hover:opacity-80">

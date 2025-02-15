@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import RememberCheckbox from "../UI/RememberCheckbox";
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>("");
@@ -8,6 +9,7 @@ const LoginForm: React.FC = () => {
   const [rememberMe, setRememberMe] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -18,10 +20,11 @@ const LoginForm: React.FC = () => {
       );
       console.log(response.data.message);
       localStorage.setItem("user", JSON.stringify(response.data.user));
-      navigate("/protected")
+      navigate("/");
     } catch (err: any) {
       console.error("Login error:", err.response?.data);
       setError(err.response?.data?.message || "Login failed");
+      setTimeout(() => setError(null), 3000);
     }
   };
 
@@ -31,9 +34,11 @@ const LoginForm: React.FC = () => {
       {error && <p className="text-red-500 mb-3 text-center">{error}</p>}
       <form onSubmit={handleLogin}>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-300">Email</label>
+          <label className="block text-sm font-medium text-gray-300">
+            Email
+          </label>
           <input
-            type="email"
+            type="text"
             className="mt-1 p-2 w-full bg-gray-700 border border-gray-600 rounded-md text-white"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -41,7 +46,9 @@ const LoginForm: React.FC = () => {
           />
         </div>
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-300">Password</label>
+          <label className="block text-sm font-medium text-gray-300">
+            Password
+          </label>
           <input
             type="password"
             className="mt-1 p-2 w-full bg-gray-700 border border-gray-600 rounded-md text-white"
@@ -51,14 +58,20 @@ const LoginForm: React.FC = () => {
           />
         </div>
         <div className="flex items-center mb-6">
-          <input
-            type="checkbox"
-            id="rememberMe"
-            className="mr-2"
+          <RememberCheckbox
             checked={rememberMe}
-            onChange={(e) => setRememberMe(e.target.checked)}
+            onChange={(e) => {
+              setRememberMe(e.target.checked);
+              console.log(e.target.checked);
+            }}
+            id="rememberMeToggle"
           />
-          <label htmlFor="rememberMe" className="text-sm text-gray-300">Remember Me</label>
+          <label
+            htmlFor="rememberMeToggle"
+            className="ml-2 text-sm text-gray-300 cursor-pointer"
+          >
+            Remember Me
+          </label>
         </div>
         <button
           type="submit"
