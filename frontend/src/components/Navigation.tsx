@@ -2,28 +2,10 @@ import { Link } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { FaBook } from "react-icons/fa6";
 import { IoLogOutOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-const Navigation: React.FC = () => {
-  const navigate = useNavigate();
+import useLogout from "../hooks/useLogout"; 
 
-  const logoutButton = async (): Promise<void> => {
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/user/logout",
-        {},
-        { withCredentials: true }
-      );
-      if (response.data.success) {
-        localStorage.removeItem("user");
-        navigate('/login')
-      } else {
-        console.error("Logout failed:", response.data.message);
-      }
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
+const Navigation: React.FC = () => {
+  const logout = useLogout();
 
   return (
     <nav className="bg-gray-800 text-white p-2 w-full">
@@ -46,11 +28,10 @@ const Navigation: React.FC = () => {
               className="flex items-center space-x-2 hover:text-gray-300"
             >
               <FaUser className="text-xs" />
-
               <span className="text-xs">Login</span>
             </Link>
           ) : (
-            <IoLogOutOutline onClick={logoutButton} />
+            <IoLogOutOutline onClick={logout} className="cursor-pointer" />
           )}
         </div>
       </div>

@@ -10,7 +10,6 @@ const LoginForm: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  // Handle local email/password login
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -20,7 +19,6 @@ const LoginForm: React.FC = () => {
         { withCredentials: true }
       );
       console.log(response.data.message);
-      // Save user info to local storage
       localStorage.setItem("user", JSON.stringify(response.data.user));
       navigate("/");
     } catch (err: any) {
@@ -30,9 +28,7 @@ const LoginForm: React.FC = () => {
     }
   };
 
-  // Trigger Google OAuth login
   const handleGoogleLogin = () => {
-    // Pass the rememberMe flag as a query parameter
     window.location.href = `http://localhost:3001/auth/google?rememberMe=${rememberMe}`;
   };
 
