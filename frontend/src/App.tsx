@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ProtectedRoute from './components/auth/ProtectedRoute';
-
+import LoginSuccess from "./components/auth/LoginSuccess"
 const App: React.FC = () => {
   return (
     <Router>
@@ -14,7 +14,7 @@ const App: React.FC = () => {
           <Route index element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
-          
+          <Route path="login-success" element={<LoginSuccess />} />
         </Route>
       </Routes>
     </Router>

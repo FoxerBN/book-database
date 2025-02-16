@@ -48,7 +48,7 @@ const RegisterForm: React.FC = () => {
   };
   
   return (
-    <div className="">
+    <div>
       <h2 className="text-2xl font-bold text-white mb-6 text-center">Register</h2>
       {error && <p className="text-red-500 mb-3 text-center">{error}</p>}
       <form onSubmit={handleRegister}>

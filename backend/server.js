@@ -8,6 +8,8 @@ import {detectMaliciousContent} from './middlewares//global/bodySecureCheck.js'
 import cors from 'cors';
 import dotenv from 'dotenv'
 import cookieParser from "cookie-parser";
+import passport from 'passport';
+import './config/passport.js';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -17,6 +19,7 @@ app.use(cors({
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true 
 }));
+passport.authenticate('google')
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,6 +27,7 @@ app.use(helmet());
 app.use(mongoSanitize());
 app.use(xssClean());
 app.use(detectMaliciousContent);
+app.use(passport.initialize());
 connectToMongoDB()
 
 //*MIDDLEWARES IMPORT
@@ -39,6 +43,7 @@ import deleteOneBook from './routes/books/deleteOneBook.js';
 import reviewsRouter from './routes/books/reviewsRouter.js'
 //*USER ROUTES IMPORT
 import userRouter from './routes/user/userRouter.js';
+import googleAuthRouter from './routes/user/googleAuth.js';
 //* GLOBAL MIDDLEWARES
 app.use(requestLogger);
 
@@ -56,7 +61,7 @@ app.use('/api/books',deleteOneBook)
 app.use('/api/books',reviewsRouter)
 
 app.use('/user',userRouter)
-
+app.use('/auth', googleAuthRouter);
 app.use(errorHandler)
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)

@@ -1,15 +1,16 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import RememberCheckbox from "../UI/RememberCheckbox";
 
 const LoginForm: React.FC = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [rememberMe, setRememberMe] = useState<boolean>(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  // Handle local email/password login
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -19,6 +20,7 @@ const LoginForm: React.FC = () => {
         { withCredentials: true }
       );
       console.log(response.data.message);
+      // Save user info to local storage
       localStorage.setItem("user", JSON.stringify(response.data.user));
       navigate("/");
     } catch (err: any) {
@@ -26,6 +28,12 @@ const LoginForm: React.FC = () => {
       setError(err.response?.data?.message || "Login failed");
       setTimeout(() => setError(null), 3000);
     }
+  };
+
+  // Trigger Google OAuth login
+  const handleGoogleLogin = () => {
+    // Pass the rememberMe flag as a query parameter
+    window.location.href = `http://localhost:3001/auth/google?rememberMe=${rememberMe}`;
   };
 
   return (
@@ -60,10 +68,7 @@ const LoginForm: React.FC = () => {
         <div className="flex items-center mb-6">
           <RememberCheckbox
             checked={rememberMe}
-            onChange={(e) => {
-              setRememberMe(e.target.checked);
-              console.log(e.target.checked);
-            }}
+            onChange={(e) => setRememberMe(e.target.checked)}
             id="rememberMeToggle"
           />
           <label
@@ -79,13 +84,21 @@ const LoginForm: React.FC = () => {
         >
           Login
         </button>
-        <p className="mt-4 text-center text-gray-300">
-          Don't have an account?{" "}
-          <Link to="/register" className="text-blue-400 hover:underline">
-            Register here
-          </Link>
-        </p>
       </form>
+      <div className="mt-4">
+        <button
+          onClick={handleGoogleLogin}
+          className="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-md font-bold"
+        >
+          Login with Google
+        </button>
+      </div>
+      <p className="mt-4 text-center text-gray-300">
+        Don't have an account?{" "}
+        <Link to="/register" className="text-blue-400 hover:underline">
+          Register here
+        </Link>
+      </p>
     </div>
   );
 };
