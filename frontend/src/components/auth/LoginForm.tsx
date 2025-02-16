@@ -1,35 +1,17 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Link } from "react-router-dom";
+import useLogin from "../../hooks/useLogin";
 import RememberCheckbox from "../UI/RememberCheckbox";
-
+import { FaGoogle } from "react-icons/fa6";
 const LoginForm: React.FC = () => {
+  const { login, loginWithGoogle, error } = useLogin();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/user/login",
-        { username: email, password, rememberMe },
-        { withCredentials: true }
-      );
-      console.log(response.data.message);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-      navigate("/");
-    } catch (err: any) {
-      console.error("Login error:", err.response?.data);
-      setError(err.response?.data?.message || "Login failed");
-      setTimeout(() => setError(null), 3000);
-    }
-  };
-
-  const handleGoogleLogin = () => {
-    window.location.href = `http://localhost:3001/auth/google?rememberMe=${rememberMe}`;
+    await login(email, password, rememberMe);
   };
 
   return (
@@ -81,14 +63,15 @@ const LoginForm: React.FC = () => {
           Login
         </button>
       </form>
-      <div className="mt-4">
+      <div className="mt-4 flex justify-center">
         <button
-          onClick={handleGoogleLogin}
-          className="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-md font-bold"
+          onClick={() => loginWithGoogle(rememberMe)}
+          className="flex items-center justify-center cursor-pointer bg-gray-800 p-3 rounded-full hover:bg-gray-700 transition"
         >
-          Login with Google
+          <FaGoogle className="text-white text-2xl" />
         </button>
       </div>
+
       <p className="mt-4 text-center text-gray-300">
         Don't have an account?{" "}
         <Link to="/register" className="text-blue-400 hover:underline">

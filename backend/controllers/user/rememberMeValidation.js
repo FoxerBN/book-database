@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 export const validateAuth = (req, res) => {
   const accessToken = req.cookies.accessToken;
-  const refreshToken = req.cookies.refreshToken; // May not exist!
+  const refreshToken = req.cookies.refreshToken;
 
   if (accessToken) {
     return jwt.verify(accessToken, process.env.JWT_SECRET, (err, user) => {
