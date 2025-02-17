@@ -3,12 +3,28 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  background-color: #242424;
+  --bg-color: #fff;
+  --text-color: #000;
+  --nav-bg-color: #e0e0e0;
+  --footer-bg-color: #e0e0e0;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.theme-dark {
+  --bg-color: #1a202c;
+  --text-color: #f7fafc;
+  --nav-bg-color: #2d3748;
+  --footer-bg-color: #2d3748;
+}
+
+.theme-brown {
+  --bg-color: #a0522d;
+  --text-color: #fffaf0;
+  --nav-bg-color: #572908;
+  --footer-bg-color: #583216;
 }
 
 a {

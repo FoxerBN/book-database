@@ -3,15 +3,20 @@ import Navigation from './Navigation';
 
 const Layout: React.FC = () => {
   return (
-    <div className="min-h-screen max-w-screen flex flex-col">
-      {/* ✅ Navigation mimo containeru, aby bolo na celú šírku */}
+    <div
+      style={{ backgroundColor: "var(--bg-color)", color: "var(--text-color)" }}
+      className="min-h-screen max-w-screen flex flex-col"
+    >
       <Navigation />
       
-      <main className="flex-grow container  mx-auto p-4">
+      <main className="flex-grow container mx-auto p-4">
         <Outlet />
       </main>
       
-      <footer className="bg-gray-800 text-white text-center p-4">
+      <footer
+        style={{ backgroundColor: "var(--footer-bg-color)", color: "var(--text-color)" }}
+        className="text-center p-4"
+      >
         &copy; {new Date().getFullYear()} MyApp. All rights reserved.
       </footer>
     </div>
