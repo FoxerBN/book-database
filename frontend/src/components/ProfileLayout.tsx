@@ -9,7 +9,7 @@ const ProfileLayout: React.FC = () => {
       style={{ backgroundColor: "var(--bg-color)", color: "var(--text-color)" }}
       className="w-64 bg-gray-100 p-6 border-r border-gray-300">
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold mb-1">Your Name</h2>
+          <h2 className="text-2xl font-semibold mb-1">{JSON.parse(localStorage.getItem("user") as string).username}</h2>
           <p className="text-sm">
             "A little quote or description about you."
           </p>

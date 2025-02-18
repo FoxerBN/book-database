@@ -1,3 +1,4 @@
+// src/hooks/useLogout.ts
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -26,6 +27,7 @@ const useLogout = () => {
 
         if (response.data.success) {
           localStorage.removeItem("user");
+          localStorage.removeItem("recommendedBooks");
           navigate("/login");
           Swal.fire("Logged Out", "You have been logged out successfully.", "success");
         } else {
