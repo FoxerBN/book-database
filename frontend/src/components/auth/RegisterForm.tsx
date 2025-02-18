@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 
 interface PasswordValidation  {
   length: boolean;
@@ -9,6 +9,7 @@ interface PasswordValidation  {
   number: boolean;
 }
 const RegisterForm: React.FC = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -41,6 +42,7 @@ const RegisterForm: React.FC = () => {
     try {
       const response = await axios.post('http://localhost:3001/user/register', { name, email, password }, { withCredentials: true });
       console.log(response.data.message);
+      navigate("/login");
     } catch (err: any) {
       setError(err.response?.data?.message || 'Registration failed');
       setTimeout(() => setError(null), 3000);

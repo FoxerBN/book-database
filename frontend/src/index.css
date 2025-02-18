@@ -13,6 +13,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 .theme-dark {
   --bg-color: #1a202c;
   --text-color: #f7fafc;
@@ -28,7 +33,7 @@
 }
 
 a {
-  font-weight: 500;
+  font-weight: 400;
   text-decoration: none;
 }
 

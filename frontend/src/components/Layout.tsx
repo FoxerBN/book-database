@@ -9,7 +9,7 @@ const Layout: React.FC = () => {
     >
       <Navigation />
       
-      <main className="flex-grow container mx-auto p-4">
+      <main className="flex-grow container">
         <Outlet />
       </main>
       
