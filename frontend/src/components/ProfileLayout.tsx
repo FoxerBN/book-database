@@ -4,13 +4,13 @@ import { Link, Outlet } from "react-router-dom";
 
 const ProfileLayout: React.FC = () => {
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen w-screen flex">
       <aside 
       style={{ backgroundColor: "var(--bg-color)", color: "var(--text-color)" }}
-      className="w-64 bg-gray-100 p-6 border-r border-gray-300">
+      className="w-1/3 bg-gray-100 p-6 border-r border-gray-300">
         <div className="mb-8">
           <h2 className="text-2xl font-semibold mb-1">{JSON.parse(localStorage.getItem("user") as string).username}</h2>
-          <p className="text-sm">
+          <p className="text-xl  font-(family-name:--quote-font)">
             "A little quote or description about you."
           </p>
         </div>

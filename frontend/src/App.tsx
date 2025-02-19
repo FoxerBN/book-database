@@ -11,6 +11,7 @@ import Recommended from "./pages/profile/Recommended";
 import Favourites from "./pages/profile/Favourites";
 import Friends from "./pages/profile/Friends";
 import Support from "./pages/profile/Support";
+import OneBook from "./pages/OneBook";
 import { ThemeProvider } from "./context/ThemeContext";
 
 const App: React.FC = () => {
@@ -28,7 +29,8 @@ const App: React.FC = () => {
             <Route path="friends" element={<Friends />} />
             <Route path="support" element={<Support />} />
           </Route>
-
+          
+        <Route path="onebook/:id" element={<OneBook />} />    
         </Route>
 
         <Route path="login" element={<Login />} />
