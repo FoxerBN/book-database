@@ -1,3 +1,4 @@
+// models/User.js
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
@@ -11,6 +12,11 @@ const userSchema = new mongoose.Schema({
   },
   googleId: { type: String, default: null },
   createdAt: { type: Date, default: Date.now },
+  // Add the quote field with default
+  quote: {
+    type: String,
+    default: "A little quote or description about you.",
+  },
 });
 
 const User = mongoose.model("User", userSchema);

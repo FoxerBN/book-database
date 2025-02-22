@@ -6,6 +6,9 @@ import { loginUser } from '../../controllers/user/loginUser.js';
 import { verifyAccessToken } from '../../middlewares/auth/verifyToken.js'
 import { validateAuth } from '../../controllers/user/rememberMeValidation.js';
 import { logoutUser } from '../../controllers/user/logoutUser.js';
+import { updateQuote } from '../../controllers/user/editQuote.js'
+
+
 userRouter.post('/register', validateUser, registerUser)
 userRouter.post('/login', loginUser)
 userRouter.get('/auth/validate', validateAuth)
@@ -13,4 +16,6 @@ userRouter.get("/protected", verifyAccessToken, (req, res) => {
     res.status(200).json({ message: "User is authenticated", user: req.user });
   });
 userRouter.post('/logout', logoutUser)  
+
+userRouter.put('/quote', verifyAccessToken, updateQuote)
 export default userRouter;

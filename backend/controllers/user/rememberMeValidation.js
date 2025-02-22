@@ -7,7 +7,7 @@ export const validateAuth = (req, res) => {
   if (accessToken) {
     return jwt.verify(accessToken, process.env.JWT_SECRET, (err, user) => {
       if (!err) {
-        return res.json({ success: true, user: { id: user.id, username: user.username } });
+        return res.json({ success: true, user: { id: user.id, username: user.username, quote: user.quote } });
       }
     });
   }
@@ -18,7 +18,7 @@ export const validateAuth = (req, res) => {
         return res.json({ success: false, message: "Session expired" });
       }
 
-      const newAccessToken = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, {
+      const newAccessToken = jwt.sign({ id: user.id, username: user.username,quote: user.quote }, process.env.JWT_SECRET, {
         expiresIn: "1h",
       });
 
@@ -28,7 +28,7 @@ export const validateAuth = (req, res) => {
         sameSite: "Strict",
       });
 
-      return res.json({ success: true, user: { id: user.id, username: user.username } });
+      return res.json({ success: true, user: { id: user.id, username: user.username, quote: user.quote  } });
     });
   }
   return res.json({ success: false, message: "No valid token found" });

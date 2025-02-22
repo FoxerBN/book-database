@@ -1,3 +1,5 @@
+import Review from "../../../models/Review.js";
+import Book from "../../../models/Book.js";
 export const addRating = async (req, res, next) => {
   try {
     const { bookId } = req.params;
