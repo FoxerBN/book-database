@@ -19,19 +19,8 @@ body{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-.theme-dark {
-  --bg-color: #1a202c;
-  --text-color: #f7fafc;
-  --nav-bg-color: #2d3748;
-  --footer-bg-color: #2d3748;
-}
-
-.theme-brown {
-  --bg-color: #a0522d;
-  --text-color: #fffaf0;
-  --nav-bg-color: #572908;
-  --footer-bg-color: #583216;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 a {

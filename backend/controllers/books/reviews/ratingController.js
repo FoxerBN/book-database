@@ -1,5 +1,6 @@
 import Review from "../../../models/Review.js";
 import Book from "../../../models/Book.js";
+
 export const addRating = async (req, res, next) => {
   try {
     const { bookId } = req.params;
@@ -21,9 +22,9 @@ export const addRating = async (req, res, next) => {
     let review = await Review.findOne({ book: bookId });
 
     if (!review) {
-      review = new Review({ 
-        book: bookId, 
-        rating: [rating], 
+      review = new Review({
+        book: bookId,
+        rating: [rating],
         comment: [],
         likes: 0,
         ratedByIPs: [userIP]
@@ -34,7 +35,16 @@ export const addRating = async (req, res, next) => {
           .status(400)
           .json({ message: "You have already rated this book" });
       }
+      // Ensure rating is an array before pushing
+      if (!Array.isArray(review.rating)) {
+        review.rating = [];
+      }
       review.rating.push(rating);
+      
+      // Ensure ratedByIPs is an array before pushing
+      if (!Array.isArray(review.ratedByIPs)) {
+        review.ratedByIPs = [];
+      }
       review.ratedByIPs.push(userIP);
     }
 
@@ -43,7 +53,9 @@ export const addRating = async (req, res, next) => {
     const avgRating =
       review.rating.reduce((acc, val) => acc + val, 0) / review.rating.length;
 
-    res.status(201).json({ message: "Rating saved", review, averageRating: avgRating });
+    res
+      .status(201)
+      .json({ message: "Rating saved", review, averageRating: avgRating });
   } catch (error) {
     next(error);
   }

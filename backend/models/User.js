@@ -1,4 +1,3 @@
-// models/User.js
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
@@ -17,6 +16,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "A little quote or description about you.",
   },
+  favourites: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "Book", default: [] }
+  ],
 });
 
 const User = mongoose.model("User", userSchema);

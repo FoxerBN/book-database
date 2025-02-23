@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CommentSection from "../components/UI/CommentSection";
+import { FaHeart } from "react-icons/fa";
+import axios from "axios";
 
 interface Book {
   _id: string;
@@ -13,13 +15,12 @@ interface Book {
   pages: number;
   year: number;
   genre: string;
-  // We expect an aggregated review document (if it exists) as the first element.
   reviews: Review[];
 }
 
 interface Review {
   _id: string;
-  rating: number[]; // Array of ratings
+  rating: number[];
   comment: string[];
   likes: number;
   createdAt: string;
@@ -29,8 +30,8 @@ const OneBook: React.FC = () => {
   const { id } = useParams();
   const [book, setBook] = useState<Book | null>(null);
   const [loading, setLoading] = useState(true);
+  const [favMessage, setFavMessage] = useState<string | null>(null);
 
-  // Callback to update the aggregated review from child component actions
   const updateReview = (updatedReview: Review) => {
     if (book) {
       setBook({
@@ -47,8 +48,6 @@ const OneBook: React.FC = () => {
         const data = await response.json();
         if (data.book) {
           setBook(data.book);
-          console.log(data.book);
-          
         }
       } catch (error) {
         console.error("Error fetching book:", error);
@@ -56,14 +55,29 @@ const OneBook: React.FC = () => {
         setLoading(false);
       }
     };
-
     fetchBook();
   }, [id]);
+
+  const handleAddToFavourites = async () => {
+    try {
+      const { data } = await axios.post(
+        `http://localhost:3001/user/${book?._id}/favourite`,{},
+        { withCredentials: true }
+      );
+      setFavMessage(data.message || "Book added to favourites");
+      setTimeout(() => setFavMessage(null), 3000);
+    } catch (error: any) {
+      console.error("Error adding to favourites:", error.response?.data || error.message);
+      setFavMessage(
+        error.response?.data.message || "Failed to add book to favourites"
+      );
+      setTimeout(() => setFavMessage(null), 3000);
+    }
+  };
 
   if (loading) return <p className="text-center text-lg">Loading...</p>;
   if (!book) return <p className="text-center text-lg text-red-500">Book not found</p>;
 
-  // Get the aggregated review (if available)
   const aggregatedReview = book.reviews && book.reviews.length > 0 ? book.reviews[0] : null;
 
   return (
@@ -88,8 +102,16 @@ const OneBook: React.FC = () => {
         >
           Read more on Wikipedia
         </a>
+        <button
+          onClick={handleAddToFavourites}
+          className="mt-4 flex items-center text-red-500 hover:text-red-600"
+        >
+          <FaHeart className="mr-2" /> Add to Favourites
+        </button>
+        {favMessage && <p className="mt-2 text-green-600 text-sm">{favMessage}</p>}
       </div>
 
+      {/* Right Side - Comments & Ratings */}
       <div className="md:w-1/2">
         <CommentSection review={aggregatedReview} bookId={book._id} onUpdateReview={updateReview} />
       </div>
