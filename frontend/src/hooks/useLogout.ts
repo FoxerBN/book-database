@@ -28,6 +28,7 @@ const useLogout = () => {
         if (response.data.success) {
           localStorage.removeItem("user");
           localStorage.removeItem("recommendedBooks");
+          localStorage.removeItem("favBooks");
           navigate("/login");
           Swal.fire("Logged Out", "You have been logged out successfully.", "success");
         } else {

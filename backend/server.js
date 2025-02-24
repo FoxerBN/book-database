@@ -46,6 +46,7 @@ import recommendedBooks from './routes/books/recommendedBooks.js'
 import userRouter from './routes/user/userRouter.js';
 import googleAuthRouter from './routes/user/googleAuth.js';
 import addFavorite from './routes/user/addToFavorite.js';
+import favoriteBooks from './routes/books/favouriteBooks.js';
 //* GLOBAL MIDDLEWARES
 app.use(requestLogger);
 
@@ -62,6 +63,7 @@ app.use('/api/books',addOneBook)
 app.use('/api/books',deleteOneBook)
 app.use('/api/books',reviewsRouter)
 app.use('/api/books',recommendedBooks)
+app.use('/api/books',favoriteBooks)
 
 app.use('/user',userRouter)
 app.use('/auth', googleAuthRouter);

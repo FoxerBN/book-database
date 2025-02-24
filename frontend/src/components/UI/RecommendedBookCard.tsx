@@ -12,7 +12,7 @@ const RecommendedBookCard: React.FC<RecommendedBookCardProps> = ({ book }) => {
       {book.imageLink && (
         <img
           className="w-full h-48 object-cover"
-          src={book.imageLink}
+          src={`/${book.imageLink}`}
           alt={book.title}
         />
       )}
