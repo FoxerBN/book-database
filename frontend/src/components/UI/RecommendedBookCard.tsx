@@ -1,19 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-export interface Book {
-  _id: string;
-  title: string;
-  author: string;
-  country: string;
-  imageLink: string;
-  language: string;
-  link: string;
-  pages: number;
-  year: number;
-  genre: string;
-  totalLikes?: number;
-}
+import { Book } from "../../interfaces/Book";
 
 interface RecommendedBookCardProps {
   book: Book;

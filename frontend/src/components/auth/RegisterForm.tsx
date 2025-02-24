@@ -1,13 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { Link,useNavigate } from 'react-router-dom';
-
-interface PasswordValidation  {
-  length: boolean;
-  uppercase: boolean;
-  lowercase: boolean;
-  number: boolean;
-}
+import { PasswordValidation } from '../../interfaces/PasswordValidation';
 const RegisterForm: React.FC = () => {
   const navigate = useNavigate();
   const [name, setName] = useState<string>('');

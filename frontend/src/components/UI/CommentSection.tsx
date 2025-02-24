@@ -1,20 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { FaStar, FaRegStar, FaThumbsUp } from "react-icons/fa";
+import { CommentSectionProps } from "../../interfaces/Review";
 
-interface Review {
-  _id: string;
-  rating: number[];
-  comment: string[];
-  likes: number;
-  createdAt: string;
-}
-
-interface CommentSectionProps {
-  review: Review | null;
-  bookId: string;
-  onUpdateReview: (updatedReview: Review) => void;
-}
 
 const CommentSection: React.FC<CommentSectionProps> = ({
   review,

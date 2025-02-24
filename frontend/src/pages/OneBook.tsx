@@ -3,28 +3,9 @@ import { useParams } from "react-router-dom";
 import CommentSection from "../components/UI/CommentSection";
 import { FaHeart } from "react-icons/fa";
 import axios from "axios";
+import { Book } from "../interfaces/Book";
+import { Review } from "../interfaces/Review";
 
-interface Book {
-  _id: string;
-  title: string;
-  author: string;
-  country: string;
-  imageLink: string;
-  language: string;
-  link: string;
-  pages: number;
-  year: number;
-  genre: string;
-  reviews: Review[];
-}
-
-interface Review {
-  _id: string;
-  rating: number[];
-  comment: string[];
-  likes: number;
-  createdAt: string;
-}
 
 const OneBook: React.FC = () => {
   const { id } = useParams();
