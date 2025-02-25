@@ -45,7 +45,8 @@ import recommendedBooks from './routes/books/recommendedBooks.js'
 //*USER ROUTES IMPORT
 import userRouter from './routes/user/userRouter.js';
 import googleAuthRouter from './routes/user/googleAuth.js';
-import addFavorite from './routes/user/addToFavorite.js';
+import addFavorite from './routes/user/favorite/addToFavorite.js';
+import removeFavorite from './routes/user/favorite/removeFromFavorite.js';
 import favoriteBooks from './routes/books/favouriteBooks.js';
 //* GLOBAL MIDDLEWARES
 app.use(requestLogger);
@@ -68,6 +69,8 @@ app.use('/api/books',favoriteBooks)
 app.use('/user',userRouter)
 app.use('/auth', googleAuthRouter);
 app.use('/user', addFavorite)
+app.use('/user', removeFavorite)
+
 app.use(errorHandler)
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
