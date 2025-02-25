@@ -1,6 +1,6 @@
 import Book from '../../models/Book.js'
 
-const deleteBook =async(req,res,next)=>{
+const deleteBook = async(req,res,next)=>{
     try {
         const { id } = req.params
         const deletedBook = await Book.findByIdAndDelete(id)

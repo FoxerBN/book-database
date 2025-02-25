@@ -1,4 +1,3 @@
-// tailwind.config.ts (TypeScript version)
 import type { Config } from 'tailwindcss';
 
 const config: Config = {

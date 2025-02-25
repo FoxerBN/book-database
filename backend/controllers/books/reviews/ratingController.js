@@ -22,21 +22,40 @@ export const addRating = async (req, res, next) => {
     let review = await Review.findOne({ book: bookId });
 
     if (!review) {
-      review = new Review({ book: bookId, rating, ratedByIPs: [userIP] });
+      review = new Review({
+        book: bookId,
+        rating: [rating],
+        comment: [],
+        likes: 0,
+        ratedByIPs: [userIP]
+      });
     } else {
       if (review.ratedByIPs.includes(userIP)) {
         return res
           .status(400)
           .json({ message: "You have already rated this book" });
       }
-
-      review.rating = rating;
+      // Ensure rating is an array before pushing
+      if (!Array.isArray(review.rating)) {
+        review.rating = [];
+      }
+      review.rating.push(rating);
+      
+      // Ensure ratedByIPs is an array before pushing
+      if (!Array.isArray(review.ratedByIPs)) {
+        review.ratedByIPs = [];
+      }
       review.ratedByIPs.push(userIP);
     }
 
     await review.save();
 
-    res.status(201).json({ message: "Rating saved", review });
+    const avgRating =
+      review.rating.reduce((acc, val) => acc + val, 0) / review.rating.length;
+
+    res
+      .status(201)
+      .json({ message: "Rating saved", review, averageRating: avgRating });
   } catch (error) {
     next(error);
   }
