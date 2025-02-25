@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
 import { FaBars, FaTimes } from "react-icons/fa";
-import axios from "axios";
+import { updateUserQuote } from "../api/api";
 
 const ProfileLayout: React.FC = () => {
   // Get user data from localStorage
@@ -20,18 +20,12 @@ const ProfileLayout: React.FC = () => {
     if (e.key === "Enter" && quote.trim() !== "") {
       setLoading(true);
       try {
-        const response = await axios.put(
-          "http://localhost:3001/user/quote",
-          { quote },
-          { withCredentials: true }
-        );
-        if (response.status === 200) {
+        const success = await updateUserQuote(quote);
+        if (success) {
           const updatedUser = { ...storedUser, quote };
           localStorage.setItem("user", JSON.stringify(updatedUser));
           setEditing(false);
         }
-      } catch (error) {
-        console.error("Failed to update quote:", error);
       } finally {
         setLoading(false);
       }

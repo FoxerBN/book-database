@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CommentSection from "../components/UI/CommentSection";
+import AddToFavorites from "../components/UI/AddToFavorites";
 import { Book } from "../interfaces/Book";
 import { Review } from "../interfaces/Review";
-import AddToFavorites from "../components/UI/AddToFavorites";
+import { fetchOneBook } from "../api/api"; // <-- import your API helper
 
 const OneBook: React.FC = () => {
   const { id } = useParams();
@@ -20,12 +21,10 @@ const OneBook: React.FC = () => {
   };
 
   useEffect(() => {
-    const fetchOneBook = async () => {
+    const getBook = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3001/api/books/one/${id}`
-        );
-        const data = await response.json();
+        // Use the helper function from api.ts
+        const data = await fetchOneBook(id!);
         if (data.book) {
           setBook(data.book);
         }
@@ -35,7 +34,7 @@ const OneBook: React.FC = () => {
         setLoading(false);
       }
     };
-    fetchOneBook();
+    getBook();
   }, [id]);
 
   if (loading) return <p className="text-center text-lg">Loading...</p>;
@@ -47,7 +46,6 @@ const OneBook: React.FC = () => {
 
   return (
     <div className="max-w-2xl mx-auto my-10 flex flex-col md:flex-row gap-8">
-      {/* Left Side - Book Details */}
       <div className="md:w-1/2">
         <img
           src={`/${book.imageLink}`}
