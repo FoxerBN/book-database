@@ -3,6 +3,7 @@ import { Link, Outlet } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { updateUserQuote } from "../api/api";
+import useRemoveAccount from "../hooks/useRemoveAccount";
 
 const ProfileLayout: React.FC = () => {
   // Get user data from localStorage
@@ -11,11 +12,11 @@ const ProfileLayout: React.FC = () => {
   const [quote, setQuote] = useState(storedUser?.quote || "");
   const [loading, setLoading] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  // Open input field when clicking the quote or edit icon
+  const removeAccount = useRemoveAccount();
+  
   const handleQuoteClick = () => setEditing(true);
 
-  // Handle Enter keypress
+  
   const handleKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && quote.trim() !== "") {
       setLoading(true);
@@ -115,7 +116,7 @@ const ProfileLayout: React.FC = () => {
               </Link>
             </li>
             <li
-              onClick={() => setMenuOpen(false)}
+              onClick={removeAccount}
               className="block px-4 py-2 rounded hover:bg-gray-400 transition-colors cursor-pointer"
             >
               Delete Account

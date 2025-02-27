@@ -48,6 +48,7 @@ import googleAuthRouter from './routes/user/googleAuth.js';
 import addFavorite from './routes/user/favorite/addToFavorite.js';
 import removeFavorite from './routes/user/favorite/removeFromFavorite.js';
 import favoriteBooks from './routes/books/favouriteBooks.js';
+import removeUser from './routes/user/removeUser.js';
 //* GLOBAL MIDDLEWARES
 app.use(requestLogger);
 
@@ -70,6 +71,7 @@ app.use('/user',userRouter)
 app.use('/auth', googleAuthRouter);
 app.use('/user', addFavorite)
 app.use('/user', removeFavorite)
+app.use('/user', removeUser)
 
 app.use(errorHandler)
 app.listen(PORT, () => {
