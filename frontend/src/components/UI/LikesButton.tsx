@@ -2,12 +2,12 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
-import { toggleLike } from "../../api/api"; // <-- import your API helper
+import { toggleLike } from "../../api/api";
 
 interface LikesButtonProps {
-  bookId: string;          // Which book's review we’re liking/unliking
-  initialLikes: number;    // Current like count from the server
-  initiallyLiked: boolean; // Are we initially liked? (server knows user IP)
+  bookId: string;
+  initialLikes: number;
+  initiallyLiked: boolean;
 }
 
 const LikesButton: React.FC<LikesButtonProps> = ({

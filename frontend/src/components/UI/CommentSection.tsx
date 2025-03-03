@@ -8,6 +8,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
   review,
   bookId,
   onUpdateReview,
+  ip
 }) => {
   const [newComment, setNewComment] = useState("");
   const [selectedRating, setSelectedRating] = useState(0);
@@ -17,7 +18,6 @@ const CommentSection: React.FC<CommentSectionProps> = ({
   const [commentSuccess, setCommentSuccess] = useState<string | null>(null);
   const [ratingMessage, setRatingMessage] = useState<string | null>(null);
 
-  // If review is null, use empty arrays for calculations.
   const ratings = review?.rating ?? [];
   const comments = review?.comment ?? [];
 
@@ -75,15 +75,12 @@ const CommentSection: React.FC<CommentSectionProps> = ({
     }
   };
 
-  // We'll pass the current like count and a default 'isLiked' boolean.
-  // If you want a true server-based 'isLiked' determination, fetch it in your review or 
-  // decode from IP in your backend and send back a field like `isLiked`.
   const initialLikes = review?.likes ?? 0;
-  const initiallyLiked = false; // Or from server: e.g., review?.isLiked ?? false
+  const initiallyLiked = ip ? review?.likedByIPs?.includes(ip) ?? false : false;
+console.log(initiallyLiked);
 
   return (
     <div className="border border-gray-300 rounded-lg p-4 shadow space-y-6">
-      {/* Replaces the old like button */}
       <LikesButton
         bookId={bookId}
         initialLikes={initialLikes}

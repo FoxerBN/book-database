@@ -11,13 +11,15 @@ const userSchema = new mongoose.Schema({
   },
   googleId: { type: String, default: null },
   createdAt: { type: Date, default: Date.now },
-  // Add the quote field with default
   quote: {
     type: String,
     default: "A little quote or description about you.",
   },
   favourites: [
     { type: mongoose.Schema.Types.ObjectId, ref: "Book", default: [] }
+  ],
+  friends: [
+    { type: mongoose.Schema.Types.ObjectId, ref: "User", default: [] },
   ],
 });
 

@@ -18,7 +18,6 @@ export const removeFromFavourites = async (req, res, next) => {
       return res.status(400).json({ message: "Book is not in favourites" });
     }
 
-    // Remove the book from favourites
     user.favourites = user.favourites.filter(
       (favId) => favId.toString() !== bookId
     );
