@@ -10,6 +10,7 @@ const OneBook: React.FC = () => {
   const { id } = useParams();
   const [book, setBook] = useState<Book | null>(null);
   const [loading, setLoading] = useState(true);
+  const [ip, setIp] = useState<string>("")
 
   const updateReview = (updatedReview: Review) => {
     if (book) {
@@ -23,10 +24,10 @@ const OneBook: React.FC = () => {
   useEffect(() => {
     const getBook = async () => {
       try {
-        // Use the helper function from api.ts
         const data = await fetchOneBook(id!);
         if (data.book) {
           setBook(data.book);
+          setIp(data.ip)
         }
       } catch (error) {
         console.error("Error fetching book:", error);
@@ -70,12 +71,12 @@ const OneBook: React.FC = () => {
         </button>
       </div>
 
-      {/* Right Side - Comments & Ratings */}
       <div className="md:w-1/2">
         <CommentSection
           review={aggregatedReview}
           bookId={book._id}
           onUpdateReview={updateReview}
+          ip={ip}
         />
       </div>
     </div>

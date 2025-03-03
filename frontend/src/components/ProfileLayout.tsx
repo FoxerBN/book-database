@@ -6,7 +6,6 @@ import { updateUserQuote } from "../api/api";
 import useRemoveAccount from "../hooks/useRemoveAccount";
 
 const ProfileLayout: React.FC = () => {
-  // Get user data from localStorage
   const storedUser = JSON.parse(localStorage.getItem("user") as string);
   const [editing, setEditing] = useState(false);
   const [quote, setQuote] = useState(storedUser?.quote || "");
@@ -35,7 +34,6 @@ const ProfileLayout: React.FC = () => {
 
   return (
     <div className="min-h-screen w-screen flex">
-      {/* Burger Button for mobile (<=480px) */}
       <div className="absolute top-2 right-4 max-[480px]:block min-[481px]:hidden z-50">
         <button
           onClick={() => setMenuOpen(!menuOpen)}
