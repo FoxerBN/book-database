@@ -44,17 +44,19 @@ const ProfileLayout: React.FC = () => {
       </div>
 
       <aside
-        style={{ backgroundColor: "var(--bg-color)", color: "var(--text-color)" }}
         className={`
           w-2/3 min-[481px]:w-1/3 p-6 border-r border-gray-300 
           fixed top-0 left-0 h-full transform transition-transform duration-300 ease-in-out
           ${menuOpen ? "translate-x-0" : "-translate-x-full"}
-          min-[481px]:relative min-[481px]:translate-x-0
+          min-[525px]:relative min-[525px]:translate-x-0
         `}
       >
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold mb-1">{storedUser?.username}</h2>
+          <div className="flex flex-row items-center">
           
+          <img className="w-15 rounded-2xl m-0.5 " src={storedUser.profilePhoto} alt="" />
+          <h2 className="text-xl font-semibold mb-1">{storedUser?.username}</h2>
+          </div>
           {!editing ? (
             <p
               style={{ fontFamily: "var(--quote-font)" }}
@@ -126,6 +128,15 @@ const ProfileLayout: React.FC = () => {
                 className="block px-4 py-2 rounded hover:bg-gray-400 transition-colors"
               >
                 Support
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/profile/profilephoto"
+                onClick={() => setMenuOpen(false)}
+                className="block px-4 py-2 rounded hover:bg-gray-400 transition-colors"
+              >
+                Change profile photo
               </Link>
             </li>
           </ul>

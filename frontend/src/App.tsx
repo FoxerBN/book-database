@@ -12,7 +12,7 @@ import Favourites from "./pages/profile/Favourites";
 import Friends from "./pages/profile/Friends";
 import Support from "./pages/profile/Support";
 import OneBook from "./pages/OneBook";
-
+import ProfilePhoto from './pages/profile/ProfilePhoto'
 const App: React.FC = () => {
   return (
     <Router>
@@ -33,6 +33,7 @@ const App: React.FC = () => {
             <Route path="favourites" element={<Favourites />} />
             <Route path="friends" element={<Friends />} />
             <Route path="support" element={<Support />} />
+            <Route path="profilephoto" element={<ProfilePhoto />} />
           </Route>
 
           <Route path="onebook/:id" element={<OneBook />} />
