@@ -15,9 +15,9 @@ useEffect(() => {
         return;
     }
 
-    const fetchUsers = async () => {
-        setLoading(true);
+    const fetchUsers = async () => {  
         try {
+            setLoading(true);
             const data = await searchUsersByName(searchText)
             setFoundUsers(data.users);
             setError(null);

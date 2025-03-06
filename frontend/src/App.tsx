@@ -18,18 +18,24 @@ const App: React.FC = () => {
     <Router>
       <Routes>
         <Route element={<Layout />}>
-        
-          <Route index element={<ProtectedRoute><Home /></ProtectedRoute>}/>
+          <Route
+            index
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
           <Route path="login-success" element={<LoginSuccess />} />
-          
+
           <Route path="profile/*" element={<ProfileLayout />}>
             <Route index element={<Recommended />} />
             <Route path="favourites" element={<Favourites />} />
             <Route path="friends" element={<Friends />} />
             <Route path="support" element={<Support />} />
           </Route>
-          
-        <Route path="onebook/:id" element={<OneBook />} />    
+
+          <Route path="onebook/:id" element={<OneBook />} />
         </Route>
 
         <Route path="login" element={<Login />} />

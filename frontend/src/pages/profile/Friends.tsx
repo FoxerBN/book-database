@@ -8,7 +8,7 @@ import {
 } from "../../api/api";
 import useErrorHandler from "../../hooks/useErrorHandler";
 import useSearchUsers from "../../hooks/useSearchUser"; 
-
+import { MdOutlinePersonAdd,MdOutlinePersonAddDisabled } from "react-icons/md";
 interface User {
   _id: string;
   name: string;
@@ -99,12 +99,8 @@ const FriendsPage: React.FC = () => {
                   className="flex items-center justify-between bg-gray-100 px-3 py-2 rounded"
                 >
                   <span>{user.name}</span>
-                  <button
-                    onClick={() => handleAddFriend(user._id)}
-                    className="bg-blue-500 text-2xl text-white px-2 hover:scale-110 rounded cursor-pointer hover:bg-blue-600 transition-all"
-                  >
-                    +
-                  </button>
+                  <MdOutlinePersonAdd onClick={() => handleAddFriend(user._id)}
+                    className="bg-blue-500 text-4xl text-white px-2 hover:scale-110 rounded cursor-pointer hover:bg-blue-600 transition-all"/>
                 </li>
               ))}
             </ul>
@@ -123,12 +119,8 @@ const FriendsPage: React.FC = () => {
                     className="bg-gray-100 px-3 py-2 rounded flex items-center justify-between"
                   >
                     <span>{friend.name}</span>
-                    <button
-                      onClick={() => handleRemoveFriend(friend._id)}
-                      className="text-red-500 cursor-pointer hover:scale-130 hover:text-red-700 transition-all"
-                    >
-                      ✕
-                    </button>
+                    <MdOutlinePersonAddDisabled onClick={() => handleRemoveFriend(friend._id)}
+                      className="text-red-500 cursor-pointer hover:scale-130 hover:text-red-700 transition-all"/>
                   </li>
                 ))}
               </ul>
