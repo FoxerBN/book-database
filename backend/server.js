@@ -49,6 +49,7 @@ import addFavorite from './routes/user/favorite/addToFavorite.js';
 import removeFavorite from './routes/user/favorite/removeFromFavorite.js';
 import favoriteBooks from './routes/books/favouriteBooks.js';
 import removeUser from './routes/user/removeUser.js';
+import uploadPhoto from './routes/user/profilePhoto.js';
 //*USER FRIENDS ROUTES IMPORT
 import friendsRouter from './routes/user/friendsRoutes.js';
 //* GLOBAL MIDDLEWARES
@@ -74,6 +75,7 @@ app.use('/auth', googleAuthRouter);
 app.use('/user', addFavorite)
 app.use('/user', removeFavorite)
 app.use('/user', removeUser)
+app.use('/user',uploadPhoto)
 
 //* USER FRIENDS ROUTES
 app.use('/user/friends',friendsRouter)

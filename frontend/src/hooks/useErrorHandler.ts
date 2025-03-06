@@ -3,15 +3,15 @@ import { useState, useEffect } from "react";
 import axios, { AxiosError } from "axios";
 
 function useErrorHandler(defaultMessage: string = "Something went wrong") {
-  const [error, setError] = useState<string | null>(null);
+  const [globalError, setError] = useState<string | null>(null);
 
   // Clears error after 3 seconds
   useEffect(() => {
-    if (error) {
+    if (globalError) {
       const timer = setTimeout(() => setError(null), 3000);
       return () => clearTimeout(timer);
     }
-  }, [error]);
+  }, [globalError]);
 
   // Method to handle (and parse) errors
   const handleError = (err: unknown) => {
@@ -28,7 +28,7 @@ function useErrorHandler(defaultMessage: string = "Something went wrong") {
   };
 
   return {
-    error,
+    globalError,
     handleError,
   };
 }

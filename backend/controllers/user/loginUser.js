@@ -41,7 +41,7 @@ export const loginUser = async (req, res, next) => {
 
     res.json({
       message: "Login successful",
-      user: { id: user._id, username: user.name,quote: user.quote  },
+      user: { id: user._id, username: user.name,quote: user.quote,profilePhoto: user.profilePhoto  },
     });
   } catch (error) {
     next(error);

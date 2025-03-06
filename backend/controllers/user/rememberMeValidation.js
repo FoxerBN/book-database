@@ -7,7 +7,7 @@ export const validateAuth = (req, res) => {
   if (accessToken) {
     return jwt.verify(accessToken, process.env.JWT_SECRET, (err, user) => {
       if (!err) {
-        return res.json({ success: true, user: { id: user.id, username: user.username, quote: user.quote } });
+        return res.json({ success: true, user: { id: user.id, username: user.username, quote: user.quote,profilePhoto: user.profilePhoto } });
       }
     });
   }
@@ -28,7 +28,9 @@ export const validateAuth = (req, res) => {
         sameSite: "Strict",
       });
 
-      return res.json({ success: true, user: { id: user.id, username: user.username, quote: user.quote  } });
+      return res.json({ success: true, user: { id: user.id, username: user.username, quote: user.quote,
+        profilePhoto: user.profilePhoto
+        } });
     });
   }
   return res.json({ success: false, message: "No valid token found" });
