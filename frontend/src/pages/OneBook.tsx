@@ -4,7 +4,7 @@ import CommentSection from "../components/UI/CommentSection";
 import AddToFavorites from "../components/UI/AddToFavorites";
 import { Book } from "../interfaces/Book";
 import { Review } from "../interfaces/Review";
-import { fetchOneBook } from "../api/api"; // <-- import your API helper
+import { fetchOneBook } from "../api/api";
 
 const OneBook: React.FC = () => {
   const { id } = useParams();
