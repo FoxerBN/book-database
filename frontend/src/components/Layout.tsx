@@ -6,7 +6,7 @@ const Layout: React.FC = () => {
     <div className="min-h-screen max-w-screen flex flex-col">
       <Navigation />
       
-      <main className="flex-grow container">
+      <main className="flex-grow max-w-full container">
         <Outlet />
       </main>
       

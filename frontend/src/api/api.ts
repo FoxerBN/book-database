@@ -94,3 +94,23 @@ export async function getAllFriends() {
   });
   return res.data;
 }
+
+//*SEARCH BOOK AND PAGINATE
+
+export const fetchPaginateBooks = async (
+  page: number,
+  sortBy: string,
+  order: "asc" | "desc"
+) => {
+  return axios.get("http://localhost:3001/api/books/paginate", {
+    params: { page, sortBy, order },
+    withCredentials: true,
+  });
+};
+
+export const searchBooks = async (query: string) => {
+  return axios.get("http://localhost:3001/api/books/search", {
+    params: { query },
+    withCredentials: true,
+  });
+};
