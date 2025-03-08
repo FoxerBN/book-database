@@ -1,5 +1,6 @@
 //* SERVER SETTINGS
 import express from 'express';
+import morgan from 'morgan';
 import {connectToMongoDB} from './config/db.js'
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
@@ -28,6 +29,7 @@ app.use(mongoSanitize());
 app.use(xssClean());
 app.use(detectMaliciousContent);
 app.use(passport.initialize());
+app.use(morgan('dev'));
 connectToMongoDB()
 
 //*MIDDLEWARES IMPORT
