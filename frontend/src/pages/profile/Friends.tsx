@@ -64,7 +64,7 @@ const FriendsPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-[rgba(150, 138, 71, 0.151)] py-8">
       <div className="max-w-3xl mx-auto px-4">
         <h1 className="text-3xl font-bold text-center mb-6">Friends Page</h1>
 
