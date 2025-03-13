@@ -62,6 +62,7 @@ const FriendsPage: React.FC = () => {
       fetchMyFriends();
     }
   }, []);
+console.log('myFriends');
 
   return (
     <div className="min-h-screen bg-[rgba(150, 138, 71, 0.151)] py-8">

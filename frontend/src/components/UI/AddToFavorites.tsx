@@ -95,7 +95,6 @@ const AddToFavorites: React.FC<AddToFavoritesProps> = ({ bookId }) => {
         <p className="mt-2 text-green-600 text-sm">{favMessage}</p>
       )}
 
-      {/* Inline CSS styling based on the provided snippet */}
       <style>{`
         label {
           background-color: white;
