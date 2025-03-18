@@ -10,7 +10,7 @@ const ProfileLayout = lazy(() => import("./components/ProfileLayout"));
 const Recommended = lazy(() => import("./pages/profile/Recommended"));
 const Favourites = lazy(() => import("./pages/profile/Favourites"));
 const Friends = lazy(() => import("./pages/profile/Friends"));
-const Support = lazy(() => import("./pages/profile/Support"));
+const Support = lazy(() => import("./pages/profile/support/Support"));
 const ProfilePhoto = lazy(() => import("./pages/profile/ProfilePhoto"));
 const OneBook = lazy(() => import("./pages/OneBook"));
 const LoginSuccess = lazy(() => import("./components/auth/LoginSuccess"));
