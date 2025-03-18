@@ -1,5 +1,8 @@
 //* SERVER SETTINGS
 import express from 'express';
+import http from 'http';
+import { Server } from "socket.io";
+import morgan from 'morgan';
 import {connectToMongoDB} from './config/db.js'
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
@@ -12,6 +15,15 @@ import passport from 'passport';
 import './config/passport.js';
 const app = express();
 const PORT = process.env.PORT || 3001;
+const server = http.createServer(app);
+
+
+const io = new Server(server, {
+    cors: {
+      origin: "http://localhost:5173",
+      methods: ["GET", "POST"]
+    }
+  });
 
 dotenv.config()
 app.use(cors({
@@ -28,6 +40,7 @@ app.use(mongoSanitize());
 app.use(xssClean());
 app.use(detectMaliciousContent);
 app.use(passport.initialize());
+app.use(morgan('dev'));
 connectToMongoDB()
 
 //*MIDDLEWARES IMPORT
@@ -52,6 +65,7 @@ import removeUser from './routes/user/removeUser.js';
 import uploadPhoto from './routes/user/profilePhoto.js';
 //*USER FRIENDS ROUTES IMPORT
 import friendsRouter from './routes/user/friendsRoutes.js';
+import { registerSocketListeners } from './sockets/listeners.js';
 //* GLOBAL MIDDLEWARES
 app.use(requestLogger);
 
@@ -81,7 +95,10 @@ app.use('/user',uploadPhoto)
 app.use('/user/friends',friendsRouter)
 
 app.use(errorHandler)
-app.listen(PORT, () => {
+
+registerSocketListeners(io);
+
+server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
 // //* EXPORTING APP FOR TESTING

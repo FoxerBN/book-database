@@ -45,7 +45,7 @@ const ProfileLayout: React.FC = () => {
 
       <aside
         className={`
-          w-2/3 min-[481px]:w-1/3 p-6 border-r border-gray-300 
+          w-2/3 min-[481px]:w-1/3 p-6 border-r bg-[rgba(150, 138, 71, 0.151)] border-gray-300 
           fixed top-0 left-0 h-full transform transition-transform duration-300 ease-in-out
           ${menuOpen ? "translate-x-0" : "-translate-x-full"}
           min-[525px]:relative min-[525px]:translate-x-0

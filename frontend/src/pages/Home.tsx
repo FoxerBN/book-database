@@ -6,7 +6,7 @@ import { fetchPaginateBooks, searchBooks } from "../api/api";
 import { FaSortAlphaDown, FaSortAlphaUp } from "react-icons/fa";
 import { ClipLoader } from "react-spinners";
 import SortByDropdown from "../components/UI/SortByDropdown";
-
+import RecommendedBookCard from "../components/UI/RecommendedBookCard";
 const Home: React.FC = () => {
   // PAGINATION STATE
   const [books, setBooks] = useState<Book[]>([]);
@@ -129,20 +129,11 @@ const Home: React.FC = () => {
           <ClipLoader size={40} color="#3498db" />
         </div>
       ) : (
-        <ul className="space-y-4">
-          {books.map((book) => (
-            <li
-              key={book._id}
-              className="border p-4 rounded-md shadow-md hover:shadow-lg transition"
-            >
-              <h2 className="text-lg font-bold">{book.title}</h2>
-              <p className="text-gray-600">By {book.author}</p>
-              <p className="text-sm">
-                Year: {book.year} | Pages: {book.pages}
-              </p>
-            </li>
-          ))}
-        </ul>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 place-items-center">
+        {books?.map((book) => (
+          <RecommendedBookCard key={book._id} book={book} />
+        ))}
+      </div>
       )}
 
       {/* PAGINATION CONTROLS (visible if no active search) */}
